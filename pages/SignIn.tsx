@@ -7,6 +7,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { useNotify } from '../components/Notifications';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '../components/Icon';
+import { getFriendlyErrorMessage } from '../lib/firebaseErrorMapper';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const SignIn: React.FC = () => {
       navigate('/');
     } catch (err: any) {
       console.error(err);
-      notify(err.message, "error");
+      notify(getFriendlyErrorMessage(err), "error");
     } finally {
       setLoading(false);
     }
@@ -44,12 +45,16 @@ const SignIn: React.FC = () => {
     if (!resetEmail) return notify("Please enter your email", "error");
     setResetLoading(true);
     try {
-      await sendPasswordResetEmail(auth, resetEmail);
+      const actionCodeSettings = {
+        url: window.location.origin + '/signin', // will redirect here after reset if using default firebase UI
+        handleCodeInApp: true
+      };
+      await sendPasswordResetEmail(auth, resetEmail, actionCodeSettings);
       notify("Password reset link has been sent to your email! Please check your inbox (and spam).", "success");
       setShowForgot(false);
       setResetEmail('');
     } catch (err: any) {
-      notify(err.message, "error");
+      notify(getFriendlyErrorMessage(err), "error");
     } finally {
       setResetLoading(false);
     }

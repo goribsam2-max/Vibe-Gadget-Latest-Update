@@ -349,9 +349,10 @@ const Home: React.FC = () => {
          ))}
       </div>
 
+      {heroBanners.length > 0 && (
       <motion.div 
         ref={bannerContainerRef}
-        className={`relative mb-14 overflow-hidden rounded-[2.5rem] shadow-2xl z-10 border-4 border-white animate-stagger-2 hover-tilt ${heroBanners.length > 0 ? 'block' : 'hidden'}`}
+        className="relative mb-14 overflow-hidden rounded-[2.5rem] shadow-2xl z-10 border-4 border-white animate-stagger-2 hover-tilt"
       >
         <div className="absolute inset-0 bg-mesh-pattern opacity-30 mix-blend-overlay z-0 pointer-events-none"></div>
         <div className="flex transition-transform duration-1000 ease-[cubic-bezier(0.23, 1, 0.32, 1)]" style={{ transform: `translateX(-${activeBanner * 100}%)` }}>
@@ -380,6 +381,7 @@ const Home: React.FC = () => {
            ))}
         </div>
       </motion.div>
+      )}
 
       {settings?.featuredCategory && products.filter(p => p.category.toLowerCase() === settings.featuredCategory.toLowerCase()).length > 0 && (
         <div className="mb-10 md:mb-14">

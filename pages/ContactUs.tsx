@@ -4,6 +4,7 @@ import { useNotify } from '../components/Notifications';
 import { collection, addDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import SEO from '../components/SEO';
+import Icon from '../components/Icon';
 
 const ContactUs: React.FC = () => {
   const navigate = useNavigate();

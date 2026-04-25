@@ -215,17 +215,22 @@ import ManageStories from './pages/admin/ManageStories';
 
 import ManageRiders from './pages/admin/ManageRiders';
 
-const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div 
-    initial={{ opacity: 0 }} 
-    animate={{ opacity: 1 }} 
-    exit={{ opacity: 0 }} 
-    transition={{ duration: 0.15 }} 
-    className="w-full min-h-screen"
-  >
-    {children}
-  </motion.div>
-);
+const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      exit={{ opacity: 0 }} 
+      transition={{ duration: 0.15 }} 
+      className="w-full min-h-screen"
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const AppContent: React.FC = () => {
   const [userData, setUserData] = useState<UserProfile | null>(null);
@@ -320,6 +325,8 @@ const AppContent: React.FC = () => {
           <Route path="/coupon" element={<PageWrapper><Coupon /></PageWrapper>} />
           <Route path="/add-card" element={<PageWrapper><AddCard /></PageWrapper>} />
           <Route path="/new-password" element={<PageWrapper><NewPassword /></PageWrapper>} />
+          <Route path="/__/auth/action" element={<PageWrapper><NewPassword /></PageWrapper>} />
+          <Route path="/auth/action" element={<PageWrapper><NewPassword /></PageWrapper>} />
           
           <Route path="/admin/*" element={isAdminOrStaff ? (
              <Routes>

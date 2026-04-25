@@ -7,6 +7,7 @@ import { auth, db } from '../firebase';
 import { useNotify } from '../components/Notifications';
 import { motion } from 'framer-motion';
 import Icon from '../components/Icon';
+import { getFriendlyErrorMessage } from '../lib/firebaseErrorMapper';
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState('');
@@ -44,7 +45,7 @@ const SignUp: React.FC = () => {
       navigate('/');
     } catch (err: any) {
       console.error("SignUp error:", err);
-      notify(err.message, "error");
+      notify(getFriendlyErrorMessage(err), "error");
     } finally {
       setLoading(false);
     }
