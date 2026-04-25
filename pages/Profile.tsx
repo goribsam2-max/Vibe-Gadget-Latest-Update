@@ -35,7 +35,12 @@ const Profile: React.FC<{ userData: UserProfile | null }> = ({ userData: initial
     { label: 'My Orders', icon: 'shopping-bag', path: '/orders', desc: 'Track and view your orders' },
     { label: 'My Wishlist', icon: 'heart', path: '/wishlist', desc: 'View saved products' },
     { label: 'Account Settings', icon: 'user-cog', path: '/settings', desc: 'Manage your profile and security' },
-    { label: 'Help Center', icon: 'headset', path: '/help-center', desc: 'Contact customer support' }
+    { label: 'Help Center', icon: 'headset', path: '/help-center', desc: 'Contact customer support' },
+    { label: 'Privacy Policy', icon: 'user-shield', path: '/privacy', desc: 'Read our privacy policy' },
+    { label: 'Terms & Conditions', icon: 'file-contract', path: '/terms', desc: 'Read our terms and conditions' },
+    { label: 'About Us', icon: 'info-circle', path: '/about', desc: 'Learn more about VibeGadget' },
+    { label: 'Contact Us', icon: 'envelope', path: '/contact', desc: 'Get in touch with us' },
+    { label: 'Site Map', icon: 'sitemap', path: '/sitemap-page', desc: 'View all pages' }
   ];
 
   const isAdmin = localUserData?.role === 'admin' || 

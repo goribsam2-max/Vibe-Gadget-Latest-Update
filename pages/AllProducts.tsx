@@ -6,6 +6,7 @@ import { db } from '../firebase';
 import { Product } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '../components/Icon';
+import SEO from '../components/SEO';
 
 const AllProducts: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ const AllProducts: React.FC = () => {
 
   return (
     <div className="p-6 md:p-12 pb-48 bg-white max-w-[1440px] mx-auto min-h-screen font-inter animate-fade-in relative overflow-hidden">
+        <SEO 
+          title="All Products" 
+          description="Browse our vast collection of premium gadgets, mobile phones, chargers, and accessories at VibeGadget." 
+        />
         <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
        <div className="flex items-center space-x-6 mb-14 relative z-10 animate-stagger-1">
           <button onClick={() => navigate(-1)} className="w-12 h-12 flex items-center justify-center bg-zinc-50 rounded-full border border-zinc-100 shadow-sm hover:bg-[#06331e] hover:text-white transition-all active:scale-95 group hover-tilt">

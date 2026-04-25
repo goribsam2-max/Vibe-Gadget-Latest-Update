@@ -11,6 +11,7 @@ import Logo from '../components/Logo';
 import Icon from '../components/Icon';
 import WelcomePopup from '../components/WelcomePopup';
 import MysteryBox from '../components/MysteryBox';
+import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -261,6 +262,22 @@ const Home: React.FC = () => {
 
   return (
     <div className="relative pt-8 pb-24 px-6 md:px-12 bg-white max-w-[1440px] mx-auto min-h-screen font-inter">
+      <SEO 
+        title="Home" 
+        description="VibeGadget - Premium Tech Hub for Mobile, Accessories, and Gadgets in Bangladesh" 
+        keywords="vibegadget, gadgets, mobile, accessories, apple, iphone, tech, bd" 
+        jsonLd={{
+           "@context": "https://schema.org",
+           "@type": "WebSite",
+           "name": "VibeGadget",
+           "url": "https://vibegadget.com",
+           "potentialAction": {
+             "@type": "SearchAction",
+             "target": "https://vibegadget.com/search?q={search_term_string}",
+             "query-input": "required name=search_term_string"
+           }
+        }}
+      />
       <WelcomePopup banners={popupBanners} />
       <MysteryBox products={products} />
       {/* Aesthetic Background Blobs */}

@@ -212,6 +212,38 @@ const Icon: React.FC<IconProps> = ({ name, className = '', solid = false, ...pro
           <circle cx="18.5" cy="18.5" r="2.5" stroke={cc} className={accent} strokeWidth="2"/>
         </svg>
       );
+    case 'envelope':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={baseClass} height="1em" width="1em" {...props}>
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke={cc} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M22 6l-10 7L2 6" stroke={cc} className={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    case 'file-contract':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={baseClass} height="1em" width="1em" {...props}>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke={cc} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke={cc} className={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    case 'sitemap':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={baseClass} height="1em" width="1em" {...props}>
+          <rect x="9" y="2" width="6" height="6" rx="1" stroke={cc} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <rect x="2" y="16" width="6" height="6" rx="1" stroke={cc} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <rect x="16" y="16" width="6" height="6" rx="1" stroke={cc} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12 8v4M5 16v-2a2 2 0 012-2h10a2 2 0 012 2v2" stroke={cc} className={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    case 'spinner':
+    case 'circle-notch':
+    case 'spin':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={`animate-spin ${baseClass}`} height="1em" width="1em" {...props}>
+          <circle cx="12" cy="12" r="10" stroke={cc} strokeWidth="2.5" opacity="0.3"/>
+          <path d="M12 2a10 10 0 0110 10" stroke={cc} strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+      );
     case 'inbox':
       return (
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={baseClass} height="1em" width="1em" {...props}>

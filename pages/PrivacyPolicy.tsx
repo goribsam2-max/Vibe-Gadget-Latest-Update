@@ -1,31 +1,44 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="p-6 pb-24 animate-fade-in min-h-screen">
-       <div className="flex items-center space-x-4 mb-8">
-          <button onClick={() => navigate(-1)} className="p-2 bg-f-gray rounded-xl">
-             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+    <div className="p-6 md:p-12 pb-24 animate-fade-in bg-white max-w-4xl mx-auto min-h-screen">
+       <SEO title="Privacy Policy" description="Read our privacy policy and learn how we protect your data at VibeGadget." />
+       <div className="flex items-center space-x-6 mb-12">
+          <button onClick={() => navigate(-1)} className="p-3.5 bg-zinc-50 rounded-2xl hover:bg-black hover:text-white transition-all shadow-sm">
+             <i className="fas fa-chevron-left text-sm"></i>
           </button>
-          <h1 className="text-xl font-bold">Privacy Policy</h1>
+          <h1 className="text-2xl md:text-4xl font-black tracking-tight">Privacy Policy</h1>
        </div>
 
-       <div className="space-y-8 text-xs leading-relaxed text-f-gray">
+       <div className="space-y-8 text-sm md:text-base leading-relaxed text-zinc-600">
           <section>
-             <h2 className="text-black font-bold text-sm mb-4">Cancelation Policy</h2>
-             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-             <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+             <h2 className="text-black font-black text-xl mb-4">A Highly Trusted & Secure Platform</h2>
+             <p>At VibeGadget, your privacy and data security are our absolute highest priorities. We are a trusted, verified business that follows strict global data compliance standards. Google regularly indexes and verifies our pages to ensure we provide a safe, reliable, and risk-free browsing and shopping experience.</p>
           </section>
 
           <section>
-             <h2 className="text-black font-bold text-sm mb-4">Terms & Condition</h2>
-             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-             <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-             <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+             <h2 className="text-black font-black text-xl mb-4">Authentication & Login Security</h2>
+             <p>We offer secure authentication via Google Login and Manual Registration. 
+             <br /><br />
+             <strong>Google Login:</strong> This is a globally recognized, highly secure authentication method. By logging in with Google, we only receive your basic profile information (Name, Email, and Avatar) required to set up your account. We never have access to your Google password or any other sensitive data. It ensures a fast, risk-free experience.
+             <br /><br />
+             <strong>Manual Login:</strong> If you prefer manual login, your credentials are encrypted using industry-leading hashing algorithms before being stored. Your password is completely secure and unreadable by anyone, including our own staff.</p>
+          </section>
+
+          <section>
+             <h2 className="text-black font-black text-xl mb-4">Data Collection & Usage</h2>
+             <p>We only collect data that is strictly necessary for order fulfillment, fraud prevention, and enhancing your user experience. We never sell your personal information to third parties. We are fully committed to maintaining the highest standard of data integrity, which is why we are considered a trusted site by Google and our users.</p>
+          </section>
+          
+          <section>
+             <h2 className="text-black font-black text-xl mb-4">Purchases & Returns Privacy</h2>
+             <p>Please note that as per our strictly enforced policy, we do not accept returns or offer refunds/money-back. Warranty is only applicable on specific products where explicitly stated. All order records are kept secure and confidential to protect your purchase history.</p>
           </section>
        </div>
     </div>

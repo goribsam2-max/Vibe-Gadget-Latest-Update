@@ -8,6 +8,7 @@ import { Product, Review } from '../types';
 import { useNotify } from '../components/Notifications';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import Icon from '../components/Icon';
+import SEO from '../components/SEO';
 
 const ProductDetails: React.FC = () => {
   const { id, slug } = useParams();
@@ -70,85 +71,7 @@ const ProductDetails: React.FC = () => {
   useEffect(() => {
     if (!product) return;
 
-    document.title = `${product.name} | VibeGadgets`;
-    
-    const setMeta = (propertyOrName: string, content: string) => {
-      const isProperty = propertyOrName.startsWith('og:') || propertyOrName.startsWith('product:');
-      const selector = isProperty ? `meta[property="${propertyOrName}"]` : `meta[name="${propertyOrName}"]`;
-      let element = document.querySelector(selector);
-      if (!element) {
-        element = document.createElement('meta');
-        if (isProperty) {
-            element.setAttribute('property', propertyOrName);
-        } else {
-            element.setAttribute('name', propertyOrName);
-        }
-        document.head.appendChild(element);
-      }
-      element.setAttribute('content', content);
-      return element;
-    };
-
-    const offerPriceStr = String(mysteryOffer ? mysteryOffer.discountPrice : (product.isOffer && product.offerPrice ? product.offerPrice : product.price));
-    const desc = product.description || `Buy ${product.name} at VibeGadgets. Best price guaranteed.`;
-
-    const metaTags = [
-        setMeta('description', desc),
-        setMeta('og:title', product.name),
-        setMeta('og:description', desc),
-        setMeta('og:image', product.image),
-        setMeta('og:url', window.location.href),
-        setMeta('og:type', 'product'),
-        setMeta('og:site_name', 'VibeGadgets'),
-        setMeta('product:price:amount', offerPriceStr),
-        setMeta('product:price:currency', 'BDT'),
-        setMeta('product:availability', product.stock > 0 ? 'in stock' : 'out of stock'),
-        setMeta('twitter:card', 'summary_large_image'),
-        setMeta('twitter:title', product.name),
-        setMeta('twitter:description', desc),
-        setMeta('twitter:image', product.image),
-    ];
-
-    let jsonLdScript = document.querySelector('script[id="product-schema"]');
-    if (!jsonLdScript) {
-      jsonLdScript = document.createElement('script');
-      jsonLdScript.setAttribute('type', 'application/ld+json');
-      jsonLdScript.setAttribute('id', 'product-schema');
-      document.head.appendChild(jsonLdScript);
-    }
-    
-    const jsonLd = {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        "name": product.name,
-        "image": product.images || [product.image],
-        "description": desc,
-        "sku": product.id,
-        "brand": {
-          "@type": "Brand",
-          "name": "VibeGadgets"
-        },
-        "offers": {
-          "@type": "Offer",
-          "url": window.location.href,
-          "priceCurrency": "BDT",
-          "price": offerPriceStr,
-          "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          "itemCondition": "https://schema.org/NewCondition"
-        },
-        ...((product.rating && product.numReviews) ? {
-           "aggregateRating": {
-             "@type": "AggregateRating",
-             "ratingValue": product.rating,
-             "reviewCount": product.numReviews
-           }
-        } : {})
-    };
-    jsonLdScript.textContent = JSON.stringify(jsonLd);
-
-    return () => {
-        // We leave them for SEO or cleanup if route changes
-    };
+    // We now use SEO component in render
   }, [product, mysteryOffer]);
 
   useEffect(() => {
@@ -364,7 +287,12 @@ const ProductDetails: React.FC = () => {
 
   return (
     <div className="animate-fade-in bg-white min-h-screen pb-32 w-full mx-auto flex flex-col lg:flex-row lg:items-start lg:p-12 lg:gap-16 relative overflow-hidden">
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      <SEO 
+        title={product.name} 
+        description={product.description || `Buy ${product.name} for ${mysteryOffer ? mysteryOffer.discountPrice : (product.isOffer && product.offerPrice ? product.offerPrice : product.price)} BDT`}
+        image={product.image}
+        jsonLd={jsonLd}
+      />
       <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
       
       <div className="w-full lg:w-[45%] lg:max-w-[450px] xl:max-w-[500px] lg:sticky lg:top-12 animate-stagger-1 relative z-10">

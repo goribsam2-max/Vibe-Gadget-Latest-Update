@@ -37,7 +37,7 @@ const SEOProvider = () => {
           metaRobots.setAttribute('name', 'robots');
           document.head.appendChild(metaRobots);
         }
-        if (data.robots) metaRobots.setAttribute('content', data.robots);
+        metaRobots.setAttribute('content', data.robots || 'index, follow');
         
         // --- NEW SEO & BRANDING FIELDS ---
         
@@ -183,6 +183,10 @@ import Settings from './pages/Settings';
 import HelpCenter from './pages/HelpCenter';
 import TicketDetails from './pages/TicketDetails';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import AboutUs from './pages/AboutUs';
+import Terms from './pages/Terms';
+import ContactUs from './pages/ContactUs';
+import SitemapPage from './pages/SitemapPage';
 import PasswordManager from './pages/PasswordManager';
 import AllProducts from './pages/AllProducts';
 
@@ -307,6 +311,10 @@ const AppContent: React.FC = () => {
           <Route path="/help-center" element={<PageWrapper><HelpCenter /></PageWrapper>} />
           <Route path="/ticket/:id" element={<PageWrapper><TicketDetails /></PageWrapper>} />
           <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
+          <Route path="/about" element={<PageWrapper><AboutUs /></PageWrapper>} />
+          <Route path="/terms" element={<PageWrapper><Terms /></PageWrapper>} />
+          <Route path="/contact" element={<PageWrapper><ContactUs /></PageWrapper>} />
+          <Route path="/sitemap-page" element={<PageWrapper><SitemapPage /></PageWrapper>} />
           <Route path="/shipping-address" element={<PageWrapper><ShippingAddress /></PageWrapper>} />
           <Route path="/payment-methods" element={<PageWrapper><PaymentMethods /></PageWrapper>} />
           <Route path="/coupon" element={<PageWrapper><Coupon /></PageWrapper>} />

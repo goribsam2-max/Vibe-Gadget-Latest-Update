@@ -1,17 +1,20 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNotify } from '../components/Notifications';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Icon from '../components/Icon';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
   const navigate = useNavigate();
   const notify = useNotify();
 
@@ -33,6 +36,22 @@ const SignIn: React.FC = () => {
       notify(err.message, "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!resetEmail) return notify("Please enter your email", "error");
+    setResetLoading(true);
+    try {
+      await sendPasswordResetEmail(auth, resetEmail);
+      notify("Password reset link has been sent to your email! Please check your inbox (and spam).", "success");
+      setShowForgot(false);
+      setResetEmail('');
+    } catch (err: any) {
+      notify(err.message, "error");
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -65,7 +84,10 @@ const SignIn: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 tracking-wide mb-2">Password</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-semibold text-zinc-700 tracking-wide">Password</label>
+                <button type="button" onClick={() => setShowForgot(true)} className="text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors">Forgot Password?</button>
+              </div>
               <input 
                 type="password" 
                 placeholder="••••••••" 
@@ -76,7 +98,8 @@ const SignIn: React.FC = () => {
               />
             </div>
 
-            <button disabled={loading} className="w-full py-4 mt-2 bg-[#06331e] text-white rounded-xl font-bold text-xs uppercase tracking-widest shadow-md hover:bg-[#0a4a2b] transition-all active:scale-[0.98] disabled:opacity-50">
+            <button disabled={loading} className="w-full py-4 mt-2 bg-[#06331e] text-white rounded-xl font-bold text-xs uppercase tracking-widest shadow-md hover:bg-[#0a4a2b] transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center">
+              {loading ? <Icon name="spinner" className="mr-2 animate-spin" /> : null}
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
@@ -86,6 +109,47 @@ const SignIn: React.FC = () => {
           </p>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showForgot && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-3xl overflow-hidden w-full max-w-sm shadow-2xl border border-zinc-100"
+            >
+               <div className="p-6">
+                 <div className="flex justify-between items-center mb-6">
+                   <h2 className="text-xl font-black text-zinc-900">Reset Password</h2>
+                   <button onClick={() => setShowForgot(false)} className="w-8 h-8 flex items-center justify-center bg-zinc-100 text-zinc-500 rounded-full hover:bg-black hover:text-white transition-colors">
+                     <Icon name="times" className="text-sm" />
+                   </button>
+                 </div>
+                 <p className="text-sm text-zinc-500 mb-6 leading-relaxed">Enter your email address and we'll send you a secure link to reset your password directly from Google Firebase.</p>
+                 <form onSubmit={handleResetPassword} className="space-y-4">
+                   <div>
+                     <label className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-2 border-b border-zinc-100 pb-2">Email Address</label>
+                     <input 
+                       type="email" 
+                       required
+                       value={resetEmail}
+                       onChange={e => setResetEmail(e.target.value)}
+                       placeholder="Enter your account email" 
+                       className="w-full bg-zinc-50 px-4 py-4 rounded-xl outline-none border border-zinc-200 focus:border-black transition-all font-bold text-sm"
+                     />
+                   </div>
+                   <button disabled={resetLoading} type="submit" className="w-full btn-primary py-4 text-sm mt-4 disabled:opacity-50 flex items-center justify-center">
+                     {resetLoading ? <Icon name="spinner" className="mr-2 animate-spin" /> : null}
+                     {resetLoading ? "Sending Link..." : "Send Reset Link"}
+                   </button>
+                 </form>
+               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
